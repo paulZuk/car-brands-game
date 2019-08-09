@@ -7,10 +7,6 @@ const StyledCircle = styled.div`
     height: 100px;
     background-color: white;
     border-radius: 50%;
-    
-    &:hover {
-        background-color: lightblue;
-    }
 `;
 
 const StyledImage = styled.div`

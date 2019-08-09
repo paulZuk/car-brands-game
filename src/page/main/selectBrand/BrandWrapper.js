@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const RowWrapper = styled.div`
+    max-width: 620px;
+`;
+
 const BrandWrapper = ({className, children}) => (
     <div className={`col-md-12 d-flex justify-content-center align-items-center ${className}`}>
-        <div className="d-flex flex-wrap justify-content-center">
+        <RowWrapper className="d-flex justify-content-center flex-wrap">
             {children}
-        </div> 
+        </RowWrapper>
     </div>
 );
 

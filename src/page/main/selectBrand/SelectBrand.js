@@ -1,25 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import BrandWrapper from './BrandWrapper';
 import Brand from './Brand';
 
 export class SelectBrand extends React.Component {
-
-    getBrands() {
-        return [0,1,2,3,4,5].map(elem => <Brand key={elem} />)
+    isWinnerId(id) {
+        const { winnerId, showWinner } = this.props;
+        return winnerId === id && showWinner;
     }
 
+    generateBrands() {
+        const { 
+            brands, 
+            clickBrand,
+        } = this.props;
+
+        return brands
+            .map(elem => (
+                <Brand
+                    key={elem.id} 
+                    url={`${process.env.PUBLIC_URL}/resources/carBrands/${elem.id}.jpg`}
+                    clickEvent={e => clickBrand(elem.id, e)}
+                    showWinner={this.isWinnerId(elem.id)}
+                />
+            ));
+    }
     render() {
         return (
             <BrandWrapper>
-                {this.getBrands()}
+                {this.generateBrands()}
             </BrandWrapper>
         )
     }
 };
-
-SelectBrand.propTypes = {
-    
-}
 
 export default SelectBrand;
