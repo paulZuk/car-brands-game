@@ -1,4 +1,5 @@
 import React from 'react';
+import { shuffleArray } from '../helper/shuffle';
 import BrandEnum from '../enums/CarBrands';
 import VoiceButton from './voiceButton/VoiceButton';
 import SelectBrand from './selectBrand/SelectBrand';
@@ -24,19 +25,16 @@ export class Main extends React.Component {
             setTimeout(() => {
                 this.loadNew();
                 this.getVoiceMessage(`Czy odgadniesz kolejną markę?`, this.winner.name);
-
             }, 2000);
         }
     }
 
     getBrandsArray() {
         const brandsFiltered = BrandEnum.filter(elem => elem.id !== this.winner.id);
-        const randomBrands = brandsFiltered
-            .sort(() => 0.5 - Math.random())
+        const randomBrands = shuffleArray(brandsFiltered)
             .slice(0, 5);
 
-        return [...randomBrands, this.winner]
-            .sort(() => 0.5 - Math.random());
+        return shuffleArray([...randomBrands, this.winner]);
     }
 
     getWinnerBrand() {

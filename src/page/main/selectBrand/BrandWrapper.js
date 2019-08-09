@@ -5,16 +5,16 @@ const RowWrapper = styled.div`
     max-width: 620px;
 `;
 
-const BrandWrapper = ({className, children}) => (
-    <div className={`col-md-12 d-flex justify-content-center align-items-center ${className}`}>
-        <RowWrapper className="d-flex justify-content-center flex-wrap">
-            {children}
-        </RowWrapper>
-    </div>
-);
-
-const StyledWrapper = styled(BrandWrapper)`
+const Wrapper = styled.div`
     height: 300px;
 `;
 
-export default StyledWrapper;
+const BrandWrapper = ({ children }) => (
+    <Wrapper className={`col-md-12 d-flex justify-content-center align-items-center`}>
+        <RowWrapper className="d-flex justify-content-center flex-wrap">
+            {children}
+        </RowWrapper>
+    </Wrapper>
+);
+
+export default BrandWrapper;

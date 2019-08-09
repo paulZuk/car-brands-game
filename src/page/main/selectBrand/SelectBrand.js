@@ -8,6 +8,10 @@ export class SelectBrand extends React.Component {
         return winnerId === id && showWinner;
     }
 
+    getUrl(item) {
+        return `${process.env.PUBLIC_URL}/resources/carBrands/${item.id}.jpg`;
+    }
+
     generateBrands() {
         const { 
             brands, 
@@ -15,12 +19,12 @@ export class SelectBrand extends React.Component {
         } = this.props;
 
         return brands
-            .map(elem => (
+            .map(item => (
                 <Brand
-                    key={elem.id} 
-                    url={`${process.env.PUBLIC_URL}/resources/carBrands/${elem.id}.jpg`}
-                    clickEvent={e => clickBrand(elem.id, e)}
-                    showWinner={this.isWinnerId(elem.id)}
+                    key={item.id} 
+                    url={this.getUrl(item)}
+                    clickEvent={e => clickBrand(item.id, e)}
+                    showWinner={this.isWinnerId(item.id)}
                 />
             ));
     }
