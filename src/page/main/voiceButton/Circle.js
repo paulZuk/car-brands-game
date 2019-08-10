@@ -2,14 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import mic from './images/mic.png';
 
-const StyledCircle = styled.div`
+const Circle = styled.div.attrs({
+    className: "d-flex justify-content-center align-items-center",
+})`
     width: 100px;
     height: 100px;
     background-color: white;
     border-radius: 50%;
 `;
 
-const StyledImage = styled.div`
+const Image = styled.div`
     width: 70px;
     height: 70px;
     background-image: url('${mic}');
@@ -17,13 +19,12 @@ const StyledImage = styled.div`
     background-size: contain;
 `;
 
-const Circle = props => (
-    <StyledCircle 
-        className="d-flex justify-content-center align-items-center"
+const CircleComponent = props => (
+    <Circle 
         onClick={props.clickEvent}
     >
-        <StyledImage />
-    </StyledCircle>
+        <Image />
+    </Circle>
 );
 
-export default Circle;
+export default CircleComponent;

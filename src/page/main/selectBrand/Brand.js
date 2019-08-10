@@ -2,16 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Brand = ({className, clickEvent, showWinner}) => (
-    <div onClick={clickEvent} className={className}>
+    <div 
+        onClick={clickEvent} 
+        className={className}
+    >
         {
             showWinner 
-                ? <StyledParagraph>Brawo!</StyledParagraph> 
+                ? <StyledMask>Brawo!</StyledMask> 
                 : null
         }
     </div>
 );
 
-const StyledParagraph = styled.div`
+const StyledMask = styled.div`
     color: red;
     width: 150px;
     height: 150px;
