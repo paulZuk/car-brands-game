@@ -18,6 +18,7 @@ const StyledMask = styled.div`
     color: red;
     width: 150px;
     height: 150px;
+    line-height:150px;
     text-align: center;
     background-color: lightgreen;
     font-size: 30px;

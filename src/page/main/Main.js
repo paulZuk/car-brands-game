@@ -42,6 +42,10 @@ export class Main extends React.Component {
         return BrandEnum[Math.floor(Math.random()*BrandEnum.length)];
     }
 
+    getItemFromEnum(id) {
+        return BrandEnum.find(item => item.id === id);
+    }
+
     clickBrand(id) {
         const { waiting } = this.state;
         
@@ -58,7 +62,9 @@ export class Main extends React.Component {
             return;
         }
 
-        this.getVoiceMessage('Makusiu niestety to nie ta marka, spróbuj jeszcze raz');
+        const wrongItem = this.getItemFromEnum(id);
+
+        this.getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${this.winner.name}`);
         this.setState({ correctAnswer: false });
     }
 
