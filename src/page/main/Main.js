@@ -11,6 +11,7 @@ export class Main extends React.Component {
 
         this.state = {
             correctAnswer: false,
+            waiting: false,
         }
 
         this.winner = this.getWinnerBrand();
@@ -24,7 +25,7 @@ export class Main extends React.Component {
         if (this.state.correctAnswer) {
             setTimeout(() => {
                 this.loadNew();
-                this.getVoiceMessage(`Czy odgadniesz kolejną markę?`, this.winner.name);
+                this.getVoiceMessage(this.winner.name);
             }, 2000);
         }
     }
@@ -42,8 +43,17 @@ export class Main extends React.Component {
     }
 
     clickBrand(id) {
+        const { waiting } = this.state;
+        
+        if(waiting) {
+            return;
+        }
+
         if(this.winner.id === id) {
-            this.setState({ correctAnswer: true });
+            this.setState({ 
+                correctAnswer: true,
+                waiting: true,
+            });
             this.getVoiceMessage('Świetna odpowiedź Makusiu');
             return;
         }
@@ -57,15 +67,19 @@ export class Main extends React.Component {
         this.brands = this.getBrandsArray();
 
         this.setState({ 
-            correctAnswer: false 
+            correctAnswer: false,
+            waiting: false,
         });
     }
 
-    getVoiceMessage(message, second) {
+    getVoiceMessage(message, onEnd, onStart) {
         window.responsiveVoice.speak(
             message, 
             'Polish Male', 
-            { onend: () => this.getVoiceMessage(second)}
+            { 
+                onend: () => onEnd, 
+                onstart: () => onStart
+            }
         );
     }
 
