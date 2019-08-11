@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getVoiceMessage } from '../../helper/voiceMessage';
 import Circle from './Circle';
 import ButtonWrapper from './ButtonWrapper';
 
@@ -12,7 +13,7 @@ export class VoiceButton extends React.Component {
 
     playSound() {
         const { message } = this.props;
-        window.responsiveVoice.speak(message, 'Polish Male');
+        getVoiceMessage(message);
     }
 
     render() {

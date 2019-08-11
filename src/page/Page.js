@@ -1,10 +1,10 @@
 import React from 'react';
 import Wrapper from './wrapper/Wrapper';
-import Main from './main/Main';
+import CarBrandContainer from './main/CarBrandContainer';
 
 const Page = () => (
     <Wrapper>
-        <Main />
+        <CarBrandContainer />
     </Wrapper>
 );
 

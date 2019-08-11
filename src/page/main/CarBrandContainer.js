@@ -1,10 +1,11 @@
 import React from 'react';
 import { shuffleArray } from '../helper/shuffle';
 import BrandEnum from '../enums/CarBrands';
+import { getVoiceMessage } from '../helper/voiceMessage'
 import VoiceButton from './voiceButton/VoiceButton';
 import SelectBrand from './selectBrand/SelectBrand';
 
-export class Main extends React.Component {
+export class CarBrandContainer extends React.Component {
 
     constructor() {
         super();
@@ -25,7 +26,7 @@ export class Main extends React.Component {
         if (this.state.correctAnswer) {
             setTimeout(() => {
                 this.loadNew();
-                this.getVoiceMessage(this.winner.name);
+                getVoiceMessage(this.winner.name);
             }, 2000);
         }
     }
@@ -48,6 +49,7 @@ export class Main extends React.Component {
 
     clickBrand(id) {
         const { waiting } = this.state;
+        const wrongItem = this.getItemFromEnum(id);
         
         if(waiting) {
             return;
@@ -58,13 +60,11 @@ export class Main extends React.Component {
                 correctAnswer: true,
                 waiting: true,
             });
-            this.getVoiceMessage('Świetna odpowiedź Makusiu');
+            getVoiceMessage('Świetna odpowiedź Makusiu');
             return;
         }
 
-        const wrongItem = this.getItemFromEnum(id);
-
-        this.getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${this.winner.name}`);
+        getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${this.winner.name}`);
         this.setState({ correctAnswer: false });
     }
 
@@ -76,17 +76,6 @@ export class Main extends React.Component {
             correctAnswer: false,
             waiting: false,
         });
-    }
-
-    getVoiceMessage(message, onEnd, onStart) {
-        window.responsiveVoice.speak(
-            message, 
-            'Polish Male', 
-            { 
-                onend: () => onEnd, 
-                onstart: () => onStart
-            }
-        );
     }
 
     render() {
@@ -108,4 +97,4 @@ export class Main extends React.Component {
     }
 }
 
-export default Main;
+export default CarBrandContainer;
