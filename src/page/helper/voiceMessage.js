@@ -1,7 +1,10 @@
-export const getVoiceMessage = (message) => {
+export const getVoiceMessage = (message, onEnd) => {
     window.responsiveVoice.speak(
         message, 
         'Polish Male',
+        {
+            onend: onEnd,
+        }
     );
 }
 

@@ -1,42 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { shuffleArray } from '../helper/shuffle';
+import React, { useEffect, useReducer } from 'react';
 import BrandEnum from '../enums/CarBrands';
+import { setCorrectAnswer, setWaiting, setWinnerBrand, setBrands } from './CarbrandActions';
+import { carBrandReducer, initState } from './carBrandReducer';
 import { getVoiceMessage } from '../helper/voiceMessage'
 import VoiceButton from './voiceButton/VoiceButton';
 import SelectBrand from './selectBrand/SelectBrand';
-
-let winner = getWinnerBrand();
-let brands = getBrandsArray();
-
-function getWinnerBrand() {
-    return BrandEnum[Math.floor(Math.random()*BrandEnum.length)];
-}
 
 function getItemFromEnum(id) {
     return BrandEnum.find(item => item.id === id);
 }
 
-function getBrandsArray() {
-    const brandsFiltered = BrandEnum.filter(elem => elem.id !== winner.id);
-    const randomBrands = shuffleArray(brandsFiltered)
-        .slice(0, 5);
-
-    return shuffleArray([...randomBrands, winner]);
-}
-
 export const CarBrandContainer = () => {
 
-    const [ correctAnswer, setCorrectAnswer ] = useState(false);
-    const [ waiting, setWaiting ] = useState(false);
+    const [state, dispatch] = useReducer(carBrandReducer, initState)
+    const { 
+        correctAnswer,
+        waiting, 
+        brands, 
+        winner 
+    } = state;
+
+    // useEffect(() => {
+    //     if (correctAnswer) {
+    //         setTimeout(() => {
+    //             loadNew();
+    //             getVoiceMessage(winner.name);
+    //         }, 2000);
+    //     }
+    // }, [correctAnswer]);
+
+    console.log({winner, brands});
+    
+
+    useEffect(() => {
+        loadNew()
+    }, []);
 
     useEffect(() => {
         if (correctAnswer) {
-            setTimeout(() => {
-                loadNew();
-                getVoiceMessage(winner.name);
-            }, 2000);
+            loadNew();
+            getVoiceMessage(winner.name);
         }
-    }, [correctAnswer]);
+    }, [correctAnswer, winner.name, waiting]);
 
 
     function clickBrand(id) {
@@ -47,23 +52,24 @@ export const CarBrandContainer = () => {
         }
 
         if(winner.id === id) {
-            setWaiting(true);
-            setCorrectAnswer(true);
+            dispatch(setWaiting(true));
+            dispatch(setCorrectAnswer(true));
             getVoiceMessage('Świetna odpowiedź Makusiu');
             return;
         }
 
         getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${winner.name}`);
-        setCorrectAnswer(false);
+        dispatch(setCorrectAnswer(false));
     }
 
      function loadNew() {
+        dispatch(setCorrectAnswer(false));
+        dispatch(setWaiting(false));
          
-        winner = getWinnerBrand();
-        brands = getBrandsArray();
-
-        setCorrectAnswer(false);
-        setWaiting(false);
+        setTimeout(() => {
+            dispatch(setWinnerBrand());
+            dispatch(setBrands());
+        }, 2000);
     }
 
     return (
