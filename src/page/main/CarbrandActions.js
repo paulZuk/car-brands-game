@@ -7,7 +7,7 @@ export const setCorrectAnswer = answer => {
 
 export const setWaiting = waiting => {
     return {
-        type: 'SET_CORRECT_ANSWER',
+        type: 'SET_WAITING',
         waiting,
     }
 }

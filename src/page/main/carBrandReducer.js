@@ -1,13 +1,14 @@
 import BrandEnum from '../enums/CarBrands';
 import { shuffleArray } from '../helper/shuffle';
+
 const getWinnerBrand = () => {
     return BrandEnum[Math.floor(Math.random()*BrandEnum.length)];
 }
 
-function getBrandsArray(winner) {
+const getBrandsArray = (winner, optionsNumber = 6) => {
     const brandsFiltered = BrandEnum.filter(elem => elem.id !== winner.id);
     const randomBrands = shuffleArray(brandsFiltered)
-        .slice(0, 5);
+        .slice(0, optionsNumber - 1);
 
     return shuffleArray([...randomBrands, winner]);
 }

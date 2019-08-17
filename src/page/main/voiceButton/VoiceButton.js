@@ -1,34 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { getVoiceMessage } from '../../helper/voiceMessage';
 import Circle from './Circle';
 import ButtonWrapper from './ButtonWrapper';
 
-export class VoiceButton extends React.Component {
-    constructor() {
-        super();
+export const VoiceButton = ({message, waiting}) => {
 
-        this.playSound = this.playSound.bind(this);
+    const playSound = () => {
+        if (!waiting) {
+            getVoiceMessage(message);
+        }
     }
-
-    playSound() {
-        const { message } = this.props;
-        getVoiceMessage(message);
-    }
-
-    render() {
-        return (
-            <ButtonWrapper>
-                <Circle 
-                    clickEvent={this.playSound} 
-                />
-            </ButtonWrapper>
-        )
-    }
-};
-
-VoiceButton.propTypes = {
-    message: PropTypes.string.isRequired,
+    
+    return (
+        <ButtonWrapper>
+            <Circle 
+                clickEvent={playSound} 
+            />
+        </ButtonWrapper>
+    )
 }
 
 export default VoiceButton;
