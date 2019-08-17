@@ -1,100 +1,80 @@
-import React from 'react';
-import { shuffleArray } from '../helper/shuffle';
+import React, { useEffect, useReducer } from 'react';
 import BrandEnum from '../enums/CarBrands';
+import { setCorrectAnswer, setWaiting, setWinnerBrand, setBrands } from './CarbrandActions';
+import { carBrandReducer, initState } from './carBrandReducer';
 import { getVoiceMessage } from '../helper/voiceMessage'
 import VoiceButton from './voiceButton/VoiceButton';
 import SelectBrand from './selectBrand/SelectBrand';
 
-export class CarBrandContainer extends React.Component {
+function getItemFromEnum(id) {
+    return BrandEnum.find(item => item.id === id);
+}
 
-    constructor() {
-        super();
+export const CarBrandContainer = () => {
 
-        this.state = {
-            correctAnswer: false,
-            waiting: false,
-        }
+    const [state, dispatch] = useReducer(carBrandReducer, initState);
+    const { 
+        correctAnswer,
+        waiting, 
+        brands, 
+        winner 
+    } = state;
 
-        this.winner = this.getWinnerBrand();
-        this.brands = this.getBrandsArray();
+    useEffect(() => {
+        loadNew();
+    }, []);
 
-        this.getWinnerBrand = this.getWinnerBrand.bind(this);
-        this.clickBrand = this.clickBrand.bind(this);
-    }
+    useEffect(() => {
+        getVoiceMessage(winner.name);
+    }, [winner]);
 
-    componentDidUpdate() {
-        if (this.state.correctAnswer) {
+    useEffect(() => {
+        if (correctAnswer) {
             setTimeout(() => {
-                this.loadNew();
-                getVoiceMessage(this.winner.name);
+                loadNew();
             }, 2000);
         }
-    }
+    }, [correctAnswer]);
 
-    getBrandsArray() {
-        const brandsFiltered = BrandEnum.filter(elem => elem.id !== this.winner.id);
-        const randomBrands = shuffleArray(brandsFiltered)
-            .slice(0, 5);
-
-        return shuffleArray([...randomBrands, this.winner]);
-    }
-
-    getWinnerBrand() {
-        return BrandEnum[Math.floor(Math.random()*BrandEnum.length)];
-    }
-
-    getItemFromEnum(id) {
-        return BrandEnum.find(item => item.id === id);
-    }
-
-    clickBrand(id) {
-        const { waiting } = this.state;
-        const wrongItem = this.getItemFromEnum(id);
+    function clickBrand(id) {
+        const wrongItem = getItemFromEnum(id);
         
         if(waiting) {
             return;
         }
 
-        if(this.winner.id === id) {
-            this.setState({ 
-                correctAnswer: true,
-                waiting: true,
-            });
+        if(winner.id === id) {
+            dispatch(setWaiting(true));
+            dispatch(setCorrectAnswer(true));
             getVoiceMessage('Świetna odpowiedź Makusiu');
             return;
         }
 
-        getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${this.winner.name}`);
-        this.setState({ correctAnswer: false });
+        getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${winner.name}`);
+        dispatch(setCorrectAnswer(false));
     }
 
-    loadNew() {
-        this.winner = this.getWinnerBrand();
-        this.brands = this.getBrandsArray();
-
-        this.setState({ 
-            correctAnswer: false,
-            waiting: false,
-        });
+     function loadNew() {
+        dispatch(setWinnerBrand());
+        dispatch(setBrands());
+        dispatch(setCorrectAnswer(false));
+        dispatch(setWaiting(false));
     }
 
-    render() {
-        const { correctAnswer } = this.state;
-
-        return (
-            <div className="row">
-                <VoiceButton 
-                    message={this.winner.name} 
-                />
-                <SelectBrand
-                    brands={this.brands}
-                    winnerId={this.winner.id}
-                    showWinner={correctAnswer}
-                    clickBrand={this.clickBrand}
-                />
-            </div>
-        )
-    }
+    return (
+        <div className="row">
+            <VoiceButton 
+                message={winner.name}
+                waiting={waiting}
+            />
+            <SelectBrand
+                brands={brands}
+                winnerId={winner.id}
+                showWinner={correctAnswer}
+                clickBrand={clickBrand}
+            />
+        </div>
+    )
 }
 
 export default CarBrandContainer;
