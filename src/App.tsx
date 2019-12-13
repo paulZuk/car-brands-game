@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from './page/Page';
 
-function App() {
+const App: React.SFC = () => {
   return (
     <Page />
   );

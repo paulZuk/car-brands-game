@@ -1,11 +1,13 @@
-import BrandEnum from '../enums/CarBrands';
-import { shuffleArray } from '../helper/shuffle';
+import BrandEnum from '../../enums/CarBrands';
+import { shuffleArray } from '../../helper/shuffle';
+import { SquareActionsTypes } from '../../../typings/actions/ISquareActions';
+import { IInitState } from '../../../typings/reducers/ISquareReducer';
 
-const getWinnerBrand = () => {
+const getWinner = () => {
     return BrandEnum[Math.floor(Math.random()*BrandEnum.length)];
 }
 
-const getBrandsArray = (winner, optionsNumber = 6) => {
+const getSubjectArray = (winner, optionsNumber = 6) => {
     const brandsFiltered = BrandEnum.filter(elem => elem.id !== winner.id);
     const randomBrands = shuffleArray(brandsFiltered)
         .slice(0, optionsNumber - 1);
@@ -20,7 +22,7 @@ export const initState = {
     brands: [],
 };
 
-export const carBrandReducer = (state, action) => {
+export const squareReducer = (state: IInitState, action: SquareActionsTypes) : IInitState => {
     switch(action.type) {
         case 'SET_CORRECT_ANSWER':
             return {
@@ -35,10 +37,10 @@ export const carBrandReducer = (state, action) => {
         case 'SET_WINNER_BRAND':
             return {
                 ...state,
-                winner: getWinnerBrand(),
+                winner: getWinner(),
             }
         case 'SET_BRANDS':
-            const brands = getBrandsArray(state.winner);
+            const brands = getSubjectArray(state.winner);
 
             return {
                 ...state,
@@ -50,6 +52,6 @@ export const carBrandReducer = (state, action) => {
 }
 
 export default {
-    carBrandReducer,
+    squareReducer,
     initState,
 }

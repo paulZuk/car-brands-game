@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import BrandEnum from '../enums/CarBrands';
-import { setCorrectAnswer, setWaiting, setWinnerBrand, setBrands } from './CarbrandActions';
-import { carBrandReducer, initState } from './carBrandReducer';
+import { setCorrectAnswer, setWaiting, setWinnerBrand, setBrands } from './actions/SquareActions';
+import { carBrandReducer, initState } from './reducers/squareReducer';
 import { getVoiceMessage } from '../helper/voiceMessage'
 import VoiceButton from './voiceButton/VoiceButton';
 import SelectBrand from './selectBrand/SelectBrand';
