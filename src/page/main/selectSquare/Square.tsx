@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { AnyStyledComponent } from 'styled-components';
+import styled from 'styled-components';
 
 const Square = styled.div<{ url: string }>`
     width: 150px;

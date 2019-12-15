@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import BrandEnum, { IWinner } from '../enums/CarBrands';
+import BrandEnum from '../enums/CarBrands';
 import { setCorrectAnswer, setWaiting, setWinner, setSquares } from './actions/SquareActions';
 import { squareReducer, initState } from './reducers/squareReducer';
 import { getVoiceMessage } from '../helper/voiceMessage'
