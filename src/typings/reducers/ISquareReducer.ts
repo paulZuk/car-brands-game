@@ -1,4 +1,4 @@
-import { IWinner } from '../../page/enums/CarBrands';
+import { IWinner } from '../enums/CarBrands';
 
 export interface IInitState {
     waiting: boolean;

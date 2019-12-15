@@ -1,4 +1,5 @@
-import BrandEnum, { IWinner, CarBrands } from '../../enums/CarBrands';
+import BrandEnum from '../../enums/CarBrands';
+import { IWinner, CarBrands } from '../../../typings/enums/CarBrands';
 import { 
     SET_CORRECT_ANSWER, 
     SET_WAITING, 

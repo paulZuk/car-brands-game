@@ -1,9 +1,4 @@
-export type CarBrands = Array<IWinner>;
-
-export interface IWinner {
-    id: number;
-    name: string;
-}
+import { CarBrands } from '../../typings/enums/CarBrands';
 
 const carBrands: CarBrands = [
     { id: 1, name: 'Abarth'},

@@ -1,14 +1,8 @@
 import React from 'react';
 import SquareWrapper from './SquareWrapper';
 import Square from './Square';
-import { IWinner } from '../../enums/CarBrands';
-
-export interface ISelectSquare {
-    brands: Array<IWinner>;
-    clickBrand: (id: number, event: React.MouseEvent<HTMLButtonElement>) => void;
-    showWinner: boolean;
-    winnerId: number;
-}
+import { IWinner } from '../../../typings/enums/CarBrands';
+import { ISelectSquare } from '../../../typings/ISelectSquare';
 
 export const SelectSquare: React.SFC<ISelectSquare> = (props) => {
 
