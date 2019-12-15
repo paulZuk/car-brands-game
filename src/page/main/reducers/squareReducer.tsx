@@ -1,13 +1,19 @@
-import BrandEnum from '../../enums/CarBrands';
+import BrandEnum, { IWinner, CarBrands } from '../../enums/CarBrands';
+import { 
+    SET_CORRECT_ANSWER, 
+    SET_WAITING, 
+    SET_WINNER, 
+    SET_SQUARES
+} from '../actions/constants';
 import { shuffleArray } from '../../helper/shuffle';
 import { SquareActionsTypes } from '../../../typings/actions/ISquareActions';
 import { IInitState } from '../../../typings/reducers/ISquareReducer';
 
-const getWinner = () => {
+const getWinner = (): IWinner => {
     return BrandEnum[Math.floor(Math.random()*BrandEnum.length)];
 }
 
-const getSubjectArray = (winner, optionsNumber = 6) => {
+const getSubjectArray = (winner: IWinner, optionsNumber = 6) : CarBrands => {
     const brandsFiltered = BrandEnum.filter(elem => elem.id !== winner.id);
     const randomBrands = shuffleArray(brandsFiltered)
         .slice(0, optionsNumber - 1);
@@ -15,31 +21,31 @@ const getSubjectArray = (winner, optionsNumber = 6) => {
     return shuffleArray([...randomBrands, winner]);
 }
 
-export const initState = {
+export const initState: IInitState = {
     waiting: false,
     correctAnswer: false,
-    winner: {},
+    winner: { id: 0, name: '' },
     brands: [],
 };
 
 export const squareReducer = (state: IInitState, action: SquareActionsTypes) : IInitState => {
     switch(action.type) {
-        case 'SET_CORRECT_ANSWER':
+        case SET_CORRECT_ANSWER:
             return {
                 ...state,
-                correctAnswer: action.answer,
+                correctAnswer: action.payload,
             }
-        case 'SET_WAITING':
+        case SET_WAITING:
             return {
                 ...state,
-                waiting: action.waiting,
+                waiting: action.payload,
             }
-        case 'SET_WINNER_BRAND':
+        case SET_WINNER:
             return {
                 ...state,
                 winner: getWinner(),
             }
-        case 'SET_BRANDS':
+        case SET_SQUARES:
             const brands = getSubjectArray(state.winner);
 
             return {

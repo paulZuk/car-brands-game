@@ -1,18 +1,18 @@
 import React, { useEffect, useReducer } from 'react';
-import BrandEnum from '../enums/CarBrands';
-import { setCorrectAnswer, setWaiting, setWinnerBrand, setBrands } from './actions/SquareActions';
-import { carBrandReducer, initState } from './reducers/squareReducer';
+import BrandEnum, { IWinner } from '../enums/CarBrands';
+import { setCorrectAnswer, setWaiting, setWinner, setSquares } from './actions/SquareActions';
+import { squareReducer, initState } from './reducers/squareReducer';
 import { getVoiceMessage } from '../helper/voiceMessage'
 import VoiceButton from './voiceButton/VoiceButton';
-import SelectBrand from './selectBrand/SelectBrand';
+import SelectSquare from './selectSquare/SelectSquare';
 
-function getItemFromEnum(id) {
+const getItemFromEnum = (id: number) => {
     return BrandEnum.find(item => item.id === id);
 }
 
-export const CarBrandContainer = () => {
+export const MainApp: React.FC = () => {
 
-    const [state, dispatch] = useReducer(carBrandReducer, initState);
+    const [state, dispatch] = useReducer(squareReducer, initState);
     const { 
         correctAnswer,
         waiting, 
@@ -36,10 +36,10 @@ export const CarBrandContainer = () => {
         }
     }, [correctAnswer]);
 
-    function clickBrand(id) {
+    const clickBrand = (id: number) => {
         const wrongItem = getItemFromEnum(id);
         
-        if(waiting) {
+        if(waiting || !wrongItem) {
             return;
         }
 
@@ -55,8 +55,8 @@ export const CarBrandContainer = () => {
     }
 
      function loadNew() {
-        dispatch(setWinnerBrand());
-        dispatch(setBrands());
+        dispatch(setWinner());
+        dispatch(setSquares());
         dispatch(setCorrectAnswer(false));
         dispatch(setWaiting(false));
     }
@@ -67,7 +67,7 @@ export const CarBrandContainer = () => {
                 message={winner.name}
                 waiting={waiting}
             />
-            <SelectBrand
+            <SelectSquare
                 brands={brands}
                 winnerId={winner.id}
                 showWinner={correctAnswer}
@@ -77,4 +77,4 @@ export const CarBrandContainer = () => {
     )
 }
 
-export default CarBrandContainer;
+export default MainApp;

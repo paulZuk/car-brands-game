@@ -19,10 +19,12 @@ const Image = styled.div`
     background-size: contain;
 `;
 
-const CircleComponent = props => (
-    <Circle 
-        onClick={props.clickEvent}
-    >
+interface ICircleComponent {
+    clickEvent: () => void;
+}
+
+const CircleComponent: React.FC<ICircleComponent> = props => (
+    <Circle onClick={props.clickEvent}>
         <Image />
     </Circle>
 );

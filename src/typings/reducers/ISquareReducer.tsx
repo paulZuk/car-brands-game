@@ -1,6 +1,8 @@
+import { IWinner } from '../../page/enums/CarBrands';
+
 export interface IInitState {
     waiting: boolean;
     correctAnswer: boolean;
-    winner: object;
-    brands: Array<object>;
+    winner: IWinner;
+    brands: Array<IWinner>;
 }

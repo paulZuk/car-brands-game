@@ -13,7 +13,7 @@ const Wrapper = styled.div.attrs({
     height: 300px;
 `;
 
-const BrandWrapper = ({ children }) => (
+const BrandWrapper: React.FC = ({ children }) => (
     <Wrapper>
         <RowWrapper>
             {children}

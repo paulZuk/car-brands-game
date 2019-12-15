@@ -3,9 +3,14 @@ import { getVoiceMessage } from '../../helper/voiceMessage';
 import Circle from './Circle';
 import ButtonWrapper from './ButtonWrapper';
 
-export const VoiceButton = ({message, waiting}) => {
+interface IVoiceButton {
+    message: string;
+    waiting: boolean;
+}
 
-    const playSound = () => {
+export const VoiceButton: React.FC<IVoiceButton> = ({message, waiting}) => {
+
+    const playSound = (): void => {
         if (!waiting) {
             getVoiceMessage(message);
         }
@@ -13,9 +18,7 @@ export const VoiceButton = ({message, waiting}) => {
     
     return (
         <ButtonWrapper>
-            <Circle 
-                clickEvent={playSound} 
-            />
+            <Circle clickEvent={playSound} />
         </ButtonWrapper>
     )
 }

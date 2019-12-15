@@ -1,13 +1,13 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { AnyStyledComponent } from 'styled-components';
 
-const Brand = styled.div`
+const Square = styled.div<{ url: string }>`
     width: 150px;
     height: 150px;
     background-color: white;
     margin-right: 10px;
     margin-bottom: 10px;
-    background-image: url('${props => props.url}');
+    background-image: url('${(props) => props.url}');
     background-repeat: no-repeat;
     background-size: contain;
 `;
@@ -22,8 +22,14 @@ const Mask = styled.div`
     font-size: 30px;
 `;
 
-const BrandComponent = ({clickEvent, showWinner, url}) => (
-    <Brand
+export interface ISquareComponent {
+    clickEvent: any;
+    showWinner: boolean;
+    url: string;
+}
+
+const SquareComponent: React.SFC<ISquareComponent> = ({clickEvent, showWinner, url}) => (
+    <Square
         url={url}
         onClick={clickEvent} 
     >
@@ -32,7 +38,7 @@ const BrandComponent = ({clickEvent, showWinner, url}) => (
                 ? <Mask>Brawo!</Mask> 
                 : null
         }
-    </Brand>
+    </Square>
 );
 
-export default BrandComponent;
+export default SquareComponent;

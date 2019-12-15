@@ -1,4 +1,11 @@
-const carBrands = [
+export type CarBrands = Array<IWinner>;
+
+export interface IWinner {
+    id: number;
+    name: string;
+}
+
+const carBrands: CarBrands = [
     { id: 1, name: 'Abarth'},
     { id: 2, name: 'Alfa Romeo'},
     { id: 3, name: 'Aston Martin'},

@@ -1,23 +1,26 @@
+import { 
+    SET_CORRECT_ANSWER, 
+    SET_WAITING, 
+    SET_WINNER, 
+    SET_SQUARES
+} from '../../page/main/actions/constants';
+
 export interface ISetCorrectAnswer {
-    type: string;
-    answer: boolean;
+    type: SET_CORRECT_ANSWER;
+    payload: boolean;
 }
 
 export interface ISetWaiting {
-    type: string;
-    waiting: boolean;
+    type: SET_WAITING;
+    payload: boolean;
 }
 
 export interface ISetWinner {
-    type: string;
+    type: SET_WINNER;
 }
 
 export interface ISetSquares {
-    type: string;
+    type: SET_SQUARES;
 }
 
-export interface SquareActionsTypes {
-    type: string,
-    answer: boolean;
-    waiting: boolean;
-} 
+export type SquareActionsTypes = ISetCorrectAnswer | ISetWaiting | ISetWinner | ISetSquares;

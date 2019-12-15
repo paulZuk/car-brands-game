@@ -12,17 +12,17 @@ import {
     ISetSquares,
 } from '../../../typings/actions/ISquareActions';
 
-export const setCorrectAnswer = (a: boolean) : ISetCorrectAnswer => {
+export const setCorrectAnswer = (answer: boolean) : ISetCorrectAnswer => {
     return {
         type: SET_CORRECT_ANSWER,
-        answer: a,
+        payload: answer,
     }
 }
 
-export const setWaiting = (w: boolean) : ISetWaiting => {
+export const setWaiting = (waiting: boolean) : ISetWaiting => {
     return {
         type: SET_WAITING,
-        waiting: w,
+        payload: waiting,
     }
 }
 
