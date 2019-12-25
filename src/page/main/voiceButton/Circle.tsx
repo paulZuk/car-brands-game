@@ -17,6 +17,10 @@ const Image = styled.div`
     background-image: url('${mic}');
     background-repeat: no-repeat;
     background-size: contain;
+
+    &:hover {
+        opacity: .6;
+    }
 `;
 
 interface ICircleComponent {
