@@ -43,15 +43,18 @@ export const MainApp: React.FC = () => {
             return;
         }
 
+        dispatch(setWaiting(true));
+
         if(winner.id === id) {
-            dispatch(setWaiting(true));
             dispatch(setCorrectAnswer(true));
             getVoiceMessage('Świetna odpowiedź Makusiu');
             return;
         }
 
-        getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${winner.name}`);
-        dispatch(setCorrectAnswer(false));
+        getVoiceMessage(`To jest ${wrongItem.name}, znajdź ${winner.name}`, () => {
+            dispatch(setWaiting(false));
+            dispatch(setCorrectAnswer(false));
+        });
     }
 
      function loadNew() {

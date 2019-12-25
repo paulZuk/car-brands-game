@@ -10,6 +10,19 @@ const Square = styled.div<{ url: string }>`
     background-image: url('${(props) => props.url}');
     background-repeat: no-repeat;
     background-size: contain;
+    position: relative;
+
+    &:after {
+        content:'';
+        display: block;
+        width:100%;
+        height: 150px;
+        background-color: rgba(0,0,0,0);
+    }
+
+    &:hover:after {
+        background-color: rgba(0,0,0,.1);
+    }
 `;
 
 const Mask = styled.div`

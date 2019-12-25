@@ -4,10 +4,11 @@ declare global {
     }
 }
 
-export const getVoiceMessage = (message: string): void => {
+export const getVoiceMessage = (message: string, callback: () => void = () => {}): void => {
     window.responsiveVoice.speak(
         message, 
         'Polish Male',
+        { onend: callback}
     );
 }
 
